@@ -1,6 +1,14 @@
 var app = require('express')();
 var http = require('http').Server(app);
 var io = require('socket.io')(http);
+//lowdb
+const low = require("lowdb")
+const FileSync = require("lowdb/adapters/FileSync")
+
+const dbdb = new FileSync("db.json")
+const db = low(dbdb)
+
+db.defaults({peoples: []})
 
 //redirection to index.html
 app.get("/", function(req, res){
@@ -15,6 +23,7 @@ io.on("connection", function(socket){
     
     socket.on("message", function(msg){
         console.log(msg);
+
     })
 })
 
